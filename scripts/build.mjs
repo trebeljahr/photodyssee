@@ -27,6 +27,74 @@ for (const file of (await fs.readdir("content"))
 	const $ = load(layout.replace("<!--CONTENT-->", md.render(content)));
 	$("title").text(data.title);
 	$("#text-9,#search-4").remove();
+	// Keep shared navigation consistent across all preserved page layouts.
+	$("#menu").html(
+		[
+			["/travel-blog/", "Blog"],
+			["/gallery/", "Gallery"],
+			["/about-us/", "About us"],
+		]
+			.map(
+				([href, label]) =>
+					`<li class="menu-item${data.path === href ? " current-menu-item active" : ""}"><a href="${href}"${data.path === href ? ' aria-current="page"' : ""}>${label}</a></li>`,
+			)
+			.join(""),
+	);
+	$(".custom-logo-link").prepend(
+		'<img class="brand-icon" src="/assets/87e7d51a8cca7d85-192.webp" width="40" height="40" alt="">',
+	);
+	$("#colophon").html(
+		'<div class="container archive-footer"><nav aria-label="Footer"><a href="/imprint/">Imprint</a><span aria-hidden="true">·</span><a href="/privacy-policy/">Privacy Policy</a></nav><a class="archive-back-top" href="#page" aria-label="Back to top">Back to top</a></div>',
+	);
+	$(".footer-callout,.shapely-carousel-navigation").remove();
+	$(".shapely-related-posts .owlCarousel")
+		.removeAttr("class")
+		.addClass("related-grid");
+	$(".related-item-thumbnail").removeAttr("style");
+	$(".projects .image-tile").removeClass("inner-title hover-reveal");
+	if (data.type === "post" || data.path === "/about-us/") {
+		$(".entry-content img, article > .entry-header img").each(
+			(index, element) => {
+				const img = $(element);
+				let link = img.closest("a");
+				if (
+					link.length &&
+					!link.is("[data-lightbox]") &&
+					link.attr("href") !== data.path
+				)
+					return;
+				const caption =
+					img
+						.closest("figure,.wp-caption")
+						.find("figcaption,.wp-caption-text")
+						.text()
+						.trim() ||
+					img.attr("alt") ||
+					"";
+				const src =
+					(img.attr("srcset") || "")
+						.split(",")
+						.map((entry) => entry.trim().split(/\s+/))
+						.filter((entry) => entry[0])
+						.sort(
+							(a, b) => parseInt(b[1] || "0") - parseInt(a[1] || "0"),
+						)[0]?.[0] || img.attr("src");
+				if (!link.length) {
+					img.wrap('<a class="photo-link"></a>');
+					link = img.parent();
+				}
+				link
+					.attr("href", src)
+					.attr("data-lightbox", "")
+					.attr("data-envira-caption", caption)
+					.attr(
+						"aria-label",
+						"Open photo" + (caption ? ": " + caption : " " + (index + 1)),
+					);
+			},
+		);
+	}
+
 	$("a[href]").each((_, element) => {
 		const anchor = $(element);
 		const href = anchor.attr("href");

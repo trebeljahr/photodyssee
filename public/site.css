@@ -182,10 +182,188 @@ img {
 .gallery-caption {
 	display: none;
 }
-.projects .image-tile {
-	min-height: 300px;
+.projects > .row:not(.masonry-loader) {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+	max-width: 1170px;
+	margin: 0 auto;
+	padding: 0 15px 64px;
+}
+.projects .project:not(.masonry-item) {
+	width: 100%;
+	padding: 0;
+	float: none;
+}
+.projects .project .image-tile {
+	position: relative;
+	aspect-ratio: 1;
+	height: auto;
+	min-height: 0;
+	margin: 0;
 	background-size: cover;
 	background-position: center;
+}
+.projects .image-tile > a {
+	position: absolute;
+	inset: 0;
+}
+.projects .image-tile .title {
+	display: grid;
+	place-items: center;
+	position: absolute;
+	inset: 0;
+	margin: 0;
+	padding: 24px;
+	opacity: 1;
+	transform: none;
+	background: linear-gradient(180deg, #373b3f18, #35393e8c 52%, #25282cc9);
+	transition: background-color .2s;
+}
+.projects .image-tile:hover .title {
+	background-color: #35393e22;
+}
+.projects .image-tile .title h5 {
+	color: #fff;
+	font-size: 26px;
+	text-shadow: 0 1px 8px #0008;
+}
+.custom-logo-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+}
+.custom-logo-link .brand-icon {
+	width: 40px;
+	height: 40px;
+	max-height: none;
+	object-fit: contain;
+}
+#colophon {
+	padding: 36px 0;
+	border-top: 1px solid #ffffff18;
+}
+.archive-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+}
+.archive-footer nav {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+	line-height: 1.6;
+	background: none;
+}
+.archive-footer a {
+	color: #eee;
+	font-size: 15px;
+	font-weight: 500;
+}
+.archive-footer a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+.archive-back-top {
+	white-space: nowrap;
+}
+.about-people {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 40px;
+	margin: 44px 0 12px;
+	padding-top: 36px;
+	border-top: 1px solid #ddd;
+}
+.about-people figure {
+	min-width: 0;
+	margin: 0;
+}
+.about-people figure + figure {
+	padding-left: 40px;
+	border-left: 1px solid #ddd;
+}
+.about-people img {
+	display: block;
+	width: 100%;
+	height: 340px;
+	object-fit: cover;
+	margin: 0;
+}
+.about-people figcaption {
+	padding-top: 18px;
+	line-height: 1.6;
+}
+.about-people figcaption strong,
+.about-people figcaption span {
+	display: block;
+}
+.about-people figcaption strong {
+	font-size: 22px;
+	color: #222;
+}
+.photo-link {
+	cursor: zoom-in;
+}
+.shapely-related-posts .related-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 28px;
+}
+.related-grid .item {
+	min-width: 0;
+}
+.related-grid .related-item-thumbnail {
+	display: block;
+	width: 100%;
+	height: auto;
+	padding: 0;
+	background: none;
+	aspect-ratio: 7 / 6;
+	overflow: hidden;
+}
+.related-grid .related-item-thumbnail img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	margin: 0;
+}
+.related-grid .shapely-related-post-title {
+	padding: 12px 0 0;
+	font-size: 17px;
+	line-height: 1.5;
+}
+@media (max-width: 991px) {
+	.projects > .row:not(.masonry-loader),
+	.shapely-related-posts .related-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+@media (max-width: 600px) {
+	.projects > .row:not(.masonry-loader),
+	.shapely-related-posts .related-grid,
+	.about-people {
+		grid-template-columns: 1fr;
+	}
+	.projects > .row:not(.masonry-loader) {
+		padding: 0 24px 40px;
+	}
+	.archive-footer {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 18px;
+	}
+	.about-people figure + figure {
+		border-left: 0;
+		border-top: 1px solid #ddd;
+		padding: 32px 0 0;
+	}
+	.about-people img {
+		height: auto;
+	}
 }
 .page-template-template-full-width .content-area {
 	min-height: 40vh;
@@ -265,4 +443,18 @@ input:focus-visible {
 	padding-left: 8px !important;
 	padding-right: 8px !important;
 	gap: 16px !important;
+}
+
+/* Bootstrap clearfix pseudo-elements must not occupy grid/flex tracks. */
+.projects > .row::before,
+.projects > .row::after,
+.archive-footer::before,
+.archive-footer::after {
+	content: none;
+}
+.archive-footer nav {
+	width: auto;
+	height: auto;
+	margin: 0;
+	text-align: left;
 }
