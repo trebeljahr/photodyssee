@@ -41,6 +41,8 @@ docker compose -f deploy/compose.yaml up -d
 
 For Coolify's raw Compose editor, replace the relative build context with the absolute path of the public source checkout on the server. Keep private archives outside that directory. The Docker build whitelist excludes local imports, databases, credentials, dependencies, and Git history. The hosting-config script verifies public destinations and generates HTTP 301 redirects for historical page and media URLs. Retired WordPress endpoints return 410.
 
+`deploy/update-watch-service.json` registers the Caddy runtime with the existing daily Hatchkit advisory watcher, including the locally built image name and a binary version probe. Merge this entry into the host's `update-watch-services.json`; retain it when refreshing that managed configuration. Alerts report new high/critical upstream findings and check failures. Updating the pinned runtime still requires rebuilding and redeploying this image.
+
 Keep the original `photodyssee.com` canonical URLs when reviewing on a temporary hostname. Do not point production DNS at the preview until the visual review is complete.
 
 ## Rights and dependencies

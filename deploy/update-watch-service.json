@@ -1,0 +1,10 @@
+{
+  "key": "caddy",
+  "name": "Caddy",
+  "images": ["caddy", "photodyssee-static"],
+  "github": "caddyserver/caddy",
+  "labels": [],
+  "env": [],
+  "probe": { "argv": ["caddy", "version"], "pattern": "^v?(\\d+\\.\\d+\\.\\d+)" },
+  "packageWords": ["caddy"]
+}
