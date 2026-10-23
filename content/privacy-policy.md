@@ -8,7 +8,7 @@ layout: "privacy-policy.html"
 
 Last updated: 23 October 2026
 
-This page lists every server your browser contacts when you read photodyssee.com, and what each one receives. The site has no accounts and no newsletter. It sets no cookies.
+This page lists every server your browser contacts when you read photodyssee.com, and what each one receives. The site has no accounts and no newsletter. Its own scripts set no cookies. Cloudflare may use cookies for security checks.
 
 ## Controller
 
@@ -17,9 +17,8 @@ The controller under the EU General Data Protection Regulation (GDPR) is Rico Tr
 ## Servers your browser contacts
 
 -   `photodyssee.com`: the blog itself, with its photos, fonts and scripts. Cloudflare passes each request on to a Hetzner VPS serving static files.
--   `static.cloudflareinsights.com`: the script of Cloudflare Web Analytics. Visitors in the EU, the EEA, the United Kingdom and Switzerland do not get it.
 
-No other server receives a request from your browser. External links contact another site only when you click them. Search matches run in your browser against a public index of the journal. New searches put your words in the URL fragment, which is not sent with the page request.
+Photos, fonts and site scripts load from this domain. Cloudflare may load resources for security checks. External links contact another site only when you click them. Search matches run in your browser against a public index of the journal. New searches put your words in the URL fragment, which is not sent with the page request.
 
 ## Hosting
 
@@ -31,15 +30,9 @@ The fonts and icons are copies on photodyssee.com. Your browser contacts no font
 
 Legal basis: Art. 6 (1) (f) GDPR (legitimate interest in delivering the site securely).
 
-## Cloudflare Web Analytics
+## Analytics
 
-Cloudflare adds the script of [Cloudflare Web Analytics](https://developers.cloudflare.com/web-analytics/) to each page. Your browser loads it from `static.cloudflareinsights.com`, and the script sends its report to `photodyssee.com/cdn-cgi/rum`.
-
-The report holds the page URL, the referrer and how long the page took to load. The timings include Largest Contentful Paint, Interaction to Next Paint and Cumulative Layout Shift. Cloudflare shows me totals by page, country, browser and device type.
-
-The script sets no cookies and stores nothing on your device. It gives each page view a random ID and keeps no ID from one page view to the next. Cloudflare receives your IP address with the report, discards it at the nearest data center and does not store it.
-
-Cloudflare does not add the script for visitors who connect through a Cloudflare data center in the EU, the EEA, the United Kingdom or Switzerland. For all other visitors the legal basis is Art. 6 (1) (f) GDPR (legitimate interest in knowing how fast the pages load). You can object at any time, or block `static.cloudflareinsights.com` with a content blocker.
+Cloudflare Web Analytics is disabled. The archive contains no analytics script. Cloudflare still processes requests to deliver and protect the site.
 
 ## Former comments
 
@@ -53,7 +46,7 @@ Email [imprint+photodyssee@trebeljahr.com](mailto:imprint+photodyssee@trebeljahr
 
 ## Cookies
 
-The site sets no cookies and stores nothing in your browser.
+The archive’s own scripts set no cookies and use no browser storage. Cloudflare may set security cookies, such as `cf_clearance` after a challenge. See [Cloudflare’s cookie documentation](https://developers.cloudflare.com/fundamentals/reference/policies-compliances/cloudflare-cookies/).
 
 ## Transfers outside the EU
 
@@ -62,7 +55,6 @@ Cloudflare, Inc. is established in the United States. Automattic Inc., which pro
 ## Storage period
 
 -   Former comments and associated data can remain in private backups until the backup or the relevant records are deleted.
--   Cloudflare Web Analytics: totals by page, country, browser and device type. Cloudflare does not store the IP address.
 -   Former Akismet and WordPress.com records: as stated in the privacy policy of Automattic.
 
 ## Your rights
