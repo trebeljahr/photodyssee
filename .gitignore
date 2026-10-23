@@ -3,4 +3,5 @@ dist/
 import/
 .cache/
 .build/
+.wrangler/
 .DS_Store

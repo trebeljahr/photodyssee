@@ -1,0 +1,11 @@
+{
+  "name": "photodyssee",
+  "compatibility_date": "2026-10-09",
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "workers_dev": true,
+  "preview_urls": false
+}
