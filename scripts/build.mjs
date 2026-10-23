@@ -77,11 +77,14 @@ for (const file of (await fs.readdir("content"))
 		.each((_, element) => {
 			const card = $(element).addClass("journal-card");
 			card.parent().addClass("journal-grid");
+			const content = card.find(".entry-content").first();
+			const metadata = $('<div class="journal-meta"></div>').prependTo(content);
 			card
 				.find(".shapely-category")
 				.removeClass("shapely-category")
 				.addClass("journal-category")
-				.prependTo(card.find(".entry-content").first());
+				.appendTo(metadata);
+			card.find(".entry-meta").appendTo(metadata);
 			card.find(".more-link").each((_, element) => {
 				const button = $(element);
 				button.find(".meta-nav").remove();
