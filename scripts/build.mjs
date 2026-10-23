@@ -84,7 +84,10 @@ for (const file of (await fs.readdir("content"))
 				.removeClass("shapely-category")
 				.addClass("journal-category")
 				.appendTo(metadata);
-			card.find(".entry-meta").appendTo(metadata);
+			const title = card.find(".post-title").first();
+			const heading = $('<div class="journal-heading"></div>').insertBefore(title);
+			title.appendTo(heading);
+			card.find(".entry-meta").appendTo(heading);
 			card.find(".more-link").each((_, element) => {
 				const button = $(element);
 				button.find(".meta-nav").remove();
