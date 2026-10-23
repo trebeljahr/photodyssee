@@ -1,0 +1,27 @@
+{
+  "version": 5,
+  "cliVersion": "0.3.1",
+  "scaffoldedAt": "2026-10-23T03:42:06.711Z",
+  "name": "photodyssee",
+  "description": "Photodyssee travel journal and photography archive",
+  "domain": "photodyssee.com",
+  "aliases": [
+    "www.photodyssee.com"
+  ],
+  "features": [],
+  "surfaces": "static",
+  "deploymentMode": "cloudflare",
+  "clientRelease": "repo",
+  "topology": "single-origin",
+  "email": {
+    "transactional": "none",
+    "mailingList": "none"
+  },
+  "ports": {
+    "server": 3000,
+    "client": 3001
+  },
+  "s3Provider": "none",
+  "deployTarget": "existing",
+  "mlServices": []
+}

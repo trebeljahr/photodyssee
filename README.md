@@ -34,7 +34,11 @@ The gallery uses justified rows with each photo’s original aspect ratio, follo
 
 The build generates Cloudflare-compatible `_headers` and `_redirects` files in `dist/`. These provide security headers, immutable caching for hashed images/fonts/styles, and verified HTTP 301 redirects for historical page and photo URLs. The static host returns the included 404 page for unknown paths, including retired WordPress endpoints. No server functions are required.
 
-Deployment uses GitHub Actions and Cloudflare static hosting. The former VPS/Caddy hosting files have been removed. Private WordPress archives stay outside this repository and outside the published output.
+Deployment uses Cloudflare Workers Static Assets and GitHub Actions. `.hatchkit.json` registers a static-only Cloudflare project with repository-owned release files. `wrangler.jsonc` serves `dist/` without a Worker script or runtime bindings. This uses Workers Static Assets, not the separate Cloudflare Pages product.
+
+The workflow installs from the npm lockfile, builds and checks references, uploads a version, waits for asset propagation, then activates it and records a GitHub deployment. Hatchkit provisions the per-Worker `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` GitHub secrets. The local operator credential never enters this repository or CI. Validate at `https://photodyssee.ricoslabs.workers.dev` before configuring the production hostnames. Hatchkit's generic setup summary may name its starter's `packages/client/out`; the actual publish directory is the `dist/` configured here.
+
+The former VPS/Caddy hosting files have been removed. Private WordPress archives stay outside this repository and outside the published output.
 
 Keep the original `photodyssee.com` canonical URLs when reviewing on a temporary hostname. Do not point production DNS at the preview until the visual review is complete.
 
