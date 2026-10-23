@@ -1,0 +1,14 @@
+**
+!package.json
+!package-lock.json
+!content/
+!content/**
+!src/
+!src/**
+!scripts/
+!scripts/**
+!public/
+!public/**
+!deploy/
+!deploy/**
+!Dockerfile

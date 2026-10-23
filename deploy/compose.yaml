@@ -1,0 +1,25 @@
+services:
+  photodyssee:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    image: photodyssee-static:local
+    restart: unless-stopped
+    read_only: true
+    user: "10001:10001"
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m,mode=1777
+    expose:
+      - "8080"
+    mem_limit: 256m
+    cpus: 1.0
+    pids_limit: 64
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

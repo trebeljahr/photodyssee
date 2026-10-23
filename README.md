@@ -32,6 +32,15 @@ The gallery uses justified rows with each photo’s original aspect ratio, follo
 
 `dist/` contains only public static files. Serve directory indexes, return the static `404.html` for missing paths, enable compression for HTML/CSS/JS/JSON, and cache content-hashed `/assets/` files for one year. Cache HTML briefly so new deploys appear promptly. No Node, PHP, database, scheduled task, or write access is needed on the public web server.
 
+The `Dockerfile` builds and checks public content, then copies only `dist/` and Caddy configuration into a pinned Caddy image. The runtime uses UID 10001 on port 8080. `deploy/compose.yaml` adds a read-only filesystem, no Linux capabilities, no new privileges, resource limits, and a small temporary filesystem. It publishes no host ports. Put it behind the existing HTTPS proxy and keep administration on Tailscale.
+
+```sh
+docker compose -f deploy/compose.yaml build
+docker compose -f deploy/compose.yaml up -d
+```
+
+For Coolify's raw Compose editor, replace the relative build context with the absolute path of the public source checkout on the server. Keep private archives outside that directory. The Docker build whitelist excludes local imports, databases, credentials, dependencies, and Git history. The hosting-config script verifies public destinations and generates HTTP 301 redirects for historical page and media URLs. Retired WordPress endpoints return 410.
+
 Keep the original `photodyssee.com` canonical URLs when reviewing on a temporary hostname. Do not point production DNS at the preview until the visual review is complete.
 
 ## Rights and dependencies
@@ -40,7 +49,7 @@ Original writing and photography retain their existing rights. This migration gr
 
 ## Migration record
 
-The import retains 44 published posts/pages and 22 author, tag, category, and pagination pages. Four former post slugs are recorded in `src/redirects.json`, verified against WordPress’s saved slug history. Generated alias pages keep old bookmarks usable on a plain static host. Configure HTTP 301 redirects for these paths when deploying behind Nginx.
+The import retains 44 published posts/pages and 22 author, tag, category, and pagination pages. Four former post slugs are recorded in `src/redirects.json`, verified against WordPress’s saved slug history. Generated alias pages keep old bookmarks usable on a plain static host. The Caddy build also provides HTTP 301 redirects.
 
 `src/image-map.json` maps the former public media URLs to the generated images. Use this mapping for media redirects at cutover. Four source portfolio photos were already missing from the original upload tree; their URLs are listed in `src/missing-images.json`. The preview labels them “Photo unavailable.” A fifth old link was recovered from the highest-resolution numbered copy on the source server.
 
