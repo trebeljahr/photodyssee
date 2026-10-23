@@ -62,9 +62,13 @@ jobs:
           grep -q Photodyssee "$RUNNER_TEMP/home.html"
           curl --fail --silent --show-error --retry 6 --retry-all-errors --retry-delay 5 --max-time 30 https://photodyssee.ricoslabs.workers.dev/gallery/ -o "$RUNNER_TEMP/gallery.html"
           grep -q photo-album "$RUNNER_TEMP/gallery.html"
+          for host in photodyssee.com www.photodyssee.com; do
+            curl --fail --silent --show-error --retry 6 --retry-all-errors --retry-delay 5 --max-time 30 "https://$host/gallery/" -o "$RUNNER_TEMP/production-gallery.html"
+            grep -q photo-album "$RUNNER_TEMP/production-gallery.html"
+          done
 
       - name: Record the web deploy
         uses: ./.github/actions/record-ship
         with:
           environment: web
-          url: https://photodyssee.ricoslabs.workers.dev
+          url: https://photodyssee.com
