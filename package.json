@@ -1,0 +1,23 @@
+{
+	"name": "photodyssee-static",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"import": "node scripts/import.mjs && node scripts/normalize-content.mjs",
+		"build": "node scripts/build.mjs",
+		"preview": "node scripts/preview.mjs",
+		"check": "node scripts/check.mjs",
+		"prune-assets": "node scripts/prune-assets.mjs"
+	},
+	"engines": {
+		"node": ">=24"
+	},
+	"devDependencies": {
+		"cheerio": "1.2.0",
+		"gray-matter": "4.0.3",
+		"markdown-it": "14.3.3",
+		"sharp": "0.35.5",
+		"turndown": "7.2.2"
+	}
+}
