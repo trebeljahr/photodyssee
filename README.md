@@ -36,7 +36,9 @@ The build generates Cloudflare-compatible `_headers` and `_redirects` files in `
 
 Deployment uses Cloudflare Workers Static Assets and GitHub Actions. `.hatchkit.json` registers a static-only Cloudflare project with repository-owned release files. `wrangler.jsonc` serves `dist/` without a Worker script or runtime bindings. This uses Workers Static Assets, not the separate Cloudflare Pages product.
 
-The workflow installs from the npm lockfile, builds and checks references, uploads a version, waits for asset propagation, then activates it and records a GitHub deployment. Hatchkit provisions the per-Worker `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` GitHub secrets. The local operator credential never enters this repository or CI. Validate at `https://photodyssee.ricoslabs.workers.dev` before configuring the production hostnames. Hatchkit's generic setup summary may name its starter's `packages/client/out`; the actual publish directory is the `dist/` configured here.
+The workflow installs from the npm lockfile, builds and checks references, uploads a version, waits for asset propagation, then activates it, checks the public site, and records a GitHub deployment. Hatchkit provisions the per-Worker `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` GitHub secrets. The local operator credential never enters this repository or CI. Public routing is provisioned with that operator credential, separately from CI; version activation preserves the existing domains. CI's restricted token returned Cloudflare error 10002 when attempting the custom-domain setup, so the workflow does not reconcile domains or DNS. The declarations in `wrangler.jsonc` document the intended routing for an explicit operator-run `wrangler triggers deploy`.
+
+Validate at `https://photodyssee.ricoslabs.workers.dev` before changing production routing. Hatchkit's generic setup summary may name its starter's `packages/client/out`; the actual publish directory is the `dist/` configured here.
 
 The former VPS/Caddy hosting files have been removed. Private WordPress archives stay outside this repository and outside the published output.
 
