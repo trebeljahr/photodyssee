@@ -1,6 +1,8 @@
 # Photodyssee
 
-Static preservation of the Photodyssee travel journal and photography. Original page URLs, prose, photos, captions, and Shapely presentation are retained. Comments, forms, trackers, and the WordPress runtime are retired in the preview.
+Static preservation of the Photodyssee travel journal and photography. Original page URLs, prose, photos, captions, and Shapely presentation are retained. Comments, forms, trackers, and the WordPress runtime are retired.
+
+Live at [photodyssee.com](https://photodyssee.com/), with `www.photodyssee.com` on the same static deployment. GitHub Actions deploys main to Cloudflare Workers Static Assets. Original WordPress files and verified private backups remain outside this repository and outside the public web roots.
 
 ## Build and preview
 
