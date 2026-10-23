@@ -24,7 +24,9 @@ The preview binds to `127.0.0.1` on a free port. Set `PORT` when a specific port
 - `scripts/import.mjs`: one-time importer for public rendered WordPress snapshots and referenced public assets. It does not read a database or import comments, drafts, users, credentials, or PHP source.
 - `import/`: ignored migration inputs. The normal build works without these files. Private full backups live separately and must never enter this repository or `dist/`.
 
-Image variants are generated once during import, at widths up to 2400 pixels, without enlargement. Existing gallery thumbnail crops are retained. Responsive `srcset`, explicit dimensions, lazy loading, and self-hosted fonts avoid reliance on WordPress plugins.
+The original import creates WebP variants up to 2400 pixels. `npm run prepare-photos` upgrades undersized WordPress derivatives and gallery photos from the locally imported originals, with responsive variants up to 3840 pixels at WebP quality 90. It never enlarges source images. The checked-in `src/photo-variants.json` and public assets make normal builds independent of the import folder. Run photo preparation after a fresh import, then build and check.
+
+The gallery uses justified rows with each photo’s original aspect ratio, following the layout on ricos.site. Native lightboxes choose an image size for the viewport and display density. Journal previews and related articles use unified photo/text blocks; ordinary article photos retain their original captions and writing.
 
 ## Hosting
 

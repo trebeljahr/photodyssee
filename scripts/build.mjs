@@ -5,6 +5,9 @@ import MarkdownIt from "markdown-it";
 import { load } from "cheerio";
 const md = new MarkdownIt({ html: true, linkify: false });
 const redirects = JSON.parse(await fs.readFile("src/redirects.json", "utf8"));
+const photoVariants = JSON.parse(
+	await fs.readFile("src/photo-variants.json", "utf8"),
+);
 await fs.rm("dist", { recursive: true, force: true });
 await fs.cp("public", "dist", { recursive: true });
 const search = [];
@@ -51,6 +54,100 @@ for (const file of (await fs.readdir("content"))
 		.removeAttr("class")
 		.addClass("related-grid");
 	$(".related-item-thumbnail").removeAttr("style");
+	$(".related-grid .item").each((_, element) => {
+		const item = $(element);
+		const thumbnail = item.find(".related-item-thumbnail");
+		const title =
+			thumbnail.attr("aria-label") ||
+			item.find(".shapely-related-post-title").text().trim();
+		const link = $('<a class="related-article-link"></a>').attr(
+			"href",
+			thumbnail.attr("href"),
+		);
+		link.append(thumbnail.find("img").clone().attr("alt", ""));
+		link.append($('<h4 class="related-article-title"></h4>').text(title));
+		item.removeAttr("class").addClass("related-article").empty().append(link);
+	});
+	$(".post-grid-small,.post-grid-wide")
+		.filter((_, element) => !$(element).closest("body.single-post").length)
+		.each((_, element) => {
+			const card = $(element).addClass("journal-card");
+			card.parent().addClass("journal-grid");
+			card
+				.find(".shapely-category")
+				.removeClass("shapely-category")
+				.addClass("journal-category")
+				.prependTo(card.find(".entry-content").first());
+			card.find(".more-link").each((_, element) => {
+				const button = $(element);
+				button.find(".meta-nav").remove();
+				button.appendTo(card.find(".entry-content").first());
+			});
+		});
+	$("img").each((_, element) => {
+		const img = $(element);
+		const photo = photoVariants[img.attr("src")];
+		if (!photo) return;
+		img
+			.attr("src", photo.src)
+			.attr(
+				"srcset",
+				photo.variants.map((v) => `${v.src} ${v.width}w`).join(", "),
+			)
+			.attr("width", photo.width)
+			.attr("height", photo.height);
+	});
+	$(".journal-card img").attr(
+		"sizes",
+		"(max-width: 767px) calc(100vw - 48px), 360px",
+	);
+	$(".related-article img").attr(
+		"sizes",
+		"(max-width: 600px) calc(100vw - 50px), (max-width: 991px) 350px, 240px",
+	);
+	$("a[data-lightbox]").each((_, element) => {
+		const link = $(element);
+		const photo = photoVariants[link.attr("href")];
+		if (photo)
+			link
+				.attr("href", photo.src)
+				.attr(
+					"data-photo-srcset",
+					photo.variants.map((v) => `${v.src} ${v.width}w`).join(", "),
+				);
+	});
+	if (data.path === "/gallery/") {
+		$("body").addClass("photo-archive");
+		const album = $(
+			'<div class="photo-album" aria-label="Travel photographs"></div>',
+		);
+		$(".envira-gallery-link").each((index, element) => {
+			const old = $(element);
+			const photo =
+				photoVariants[old.find("img").attr("src")] ||
+				Object.values(photoVariants).find((p) => p.src === old.attr("href"));
+			const img = old.find("img").clone().removeAttr("class id style");
+			if (photo)
+				img
+					.attr("src", photo.src)
+					.attr(
+						"srcset",
+						photo.variants.map((v) => `${v.src} ${v.width}w`).join(", "),
+					)
+					.attr("width", photo.width)
+					.attr("height", photo.height);
+			img.attr("sizes", "(max-width: 600px) calc(100vw - 48px), 550px");
+			const link = $('<a class="album-photo" data-lightbox></a>')
+				.attr("href", photo?.src || old.attr("href"))
+				.attr("title", old.attr("title"))
+				.attr("data-envira-caption", old.attr("data-envira-caption") || "")
+				.attr("aria-label", "Open photo: " + (old.attr("title") || index + 1));
+			link.attr("data-photo-srcset", img.attr("srcset") || "").append(img);
+			album.append(link);
+		});
+		$(".envira-gallery-wrap").first().replaceWith(album);
+		$("noscript").remove();
+	}
 	$(".projects .image-tile").removeClass("inner-title hover-reveal");
 	if (data.type === "post" || data.path === "/about-us/") {
 		$(".entry-content img, article > .entry-header img").each(
@@ -86,6 +183,7 @@ for (const file of (await fs.readdir("content"))
 				link
 					.attr("href", src)
 					.attr("data-lightbox", "")
+					.attr("data-photo-srcset", img.attr("srcset") || "")
 					.attr("data-envira-caption", caption)
 					.attr(
 						"aria-label",

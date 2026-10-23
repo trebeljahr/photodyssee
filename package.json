@@ -8,7 +8,8 @@
 		"build": "node scripts/build.mjs",
 		"preview": "node scripts/preview.mjs",
 		"check": "node scripts/check.mjs",
-		"prune-assets": "node scripts/prune-assets.mjs"
+		"prune-assets": "node scripts/prune-assets.mjs",
+		"prepare-photos": "node scripts/prepare-photos.mjs"
 	},
 	"engines": {
 		"node": ">=24"
