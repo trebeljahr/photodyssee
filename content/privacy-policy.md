@@ -16,15 +16,15 @@ The controller under the EU General Data Protection Regulation (GDPR) is Rico Tr
 
 ## Servers your browser contacts
 
--   `photodyssee.com`: the blog itself, with its photos, fonts and scripts. Cloudflare passes each request on to a Hetzner VPS serving static files.
+-   `photodyssee.com`: the blog itself, with its photos, fonts and scripts. Cloudflare serves the static archive, including its pages and photographs.
 
 Photos, fonts and site scripts load from this domain. Cloudflare may load resources for security checks. External links contact another site only when you click them. Search matches run in your browser against a public index of the journal. New searches put your words in the URL fragment, which is not sent with the page request.
 
 ## Hosting
 
-Every request reaches Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA, first. Cloudflare passes it on to Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen, Germany. The origin serves static pages, photos, fonts and scripts. It runs no WordPress, PHP or public database.
+Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA, serves the static pages, photos, fonts and scripts. The public site runs no WordPress, PHP or database.
 
-Both receive your IP address, the address of the page, the user agent and the referrer. They use them to deliver the site and to protect it against abuse.
+Cloudflare receives your IP address, the address of the page, the user agent and the referrer. It uses them to deliver the site and protect it against abuse.
 
 The fonts and icons are copies on photodyssee.com. Your browser contacts no font service.
 
@@ -38,7 +38,7 @@ Cloudflare Web Analytics is disabled. The archive contains no analytics script. 
 
 Comments are closed. This static archive accepts no comments and sends no new comment data to Akismet or WordPress.com.
 
-Private backups of the former WordPress site can contain previously submitted comments, names, email addresses, website addresses, IP addresses, user agents and submission times. These backups are not served by the public site.
+Private backups of the former WordPress site can contain previously submitted comments, names, email addresses, website addresses, IP addresses, user agents and submission times. These backups are not served by the public site. Private copies are retained on a Hetzner VPS and on the former Uberspace account during retirement.
 
 Akismet and WordPress.com processed comments while the WordPress site was live. Records already held by Automattic are subject to [Automattic’s privacy policy](https://automattic.com/privacy/). Closing the site does not itself delete those records.
 
@@ -50,7 +50,7 @@ The archive’s own scripts set no cookies and use no browser storage. Cloudflar
 
 ## Transfers outside the EU
 
-Cloudflare, Inc. is established in the United States. Automattic Inc., which processed former comments, is also established in the United States. Access by U.S. authorities under U.S. law cannot be fully excluded. The origin host is Hetzner Online GmbH.
+Cloudflare, Inc. is established in the United States. Automattic Inc., which processed former comments, is also established in the United States. Access by U.S. authorities under U.S. law cannot be fully excluded. Private backup storage uses Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen, Germany. The former Uberspace account retains source backups during retirement.
 
 ## Storage period
 

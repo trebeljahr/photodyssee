@@ -14,7 +14,8 @@ for (const [from, to] of entries) {
 		!from.startsWith("/") ||
 		!to.startsWith("/") ||
 		to.startsWith("//") ||
-		/[\r\n]/.test(from + to)
+		/\s/.test(from + to) ||
+		/[\*:#?]/.test(from)
 	)
 		throw new Error("Invalid redirect");
 	const target = path.resolve("dist", "." + decodeURIComponent(to));
@@ -25,18 +26,26 @@ for (const [from, to] of entries) {
 }
 const lines = [...entries]
 	.sort(([a], [b]) => a.localeCompare(b))
-	.map(([from, to]) => `\t${JSON.stringify(from)} ${JSON.stringify(to)}`);
-await fs.mkdir(".build", { recursive: true });
+	.map(([from, to]) => `${from} ${to} 301`);
+if (lines.length > 2000 || lines.some((line) => line.length > 1000))
+	throw new Error("Redirects exceed Cloudflare static hosting limits");
+await fs.writeFile("dist/_redirects", lines.join("\n") + "\n");
 await fs.writeFile(
-	".build/redirects.caddy",
-	[
-		"map {path} {archive_redirect} {",
-		'\tdefault ""',
-		...lines,
-		"}",
-		'@archive_redirect expression `{archive_redirect} != ""`',
-		"redir @archive_redirect {archive_redirect} permanent",
-		"",
-	].join("\n"),
+	"dist/_headers",
+	`/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/site.js
+  Cache-Control: public, max-age=300
+
+/search-index.json
+  Cache-Control: public, max-age=300
+`,
 );
 console.log(`Prepared ${entries.size} verified HTTP redirects.`);

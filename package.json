@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"import": "node scripts/import.mjs && node scripts/normalize-content.mjs",
-		"build": "node scripts/build.mjs",
+		"build": "node scripts/build.mjs && node scripts/hosting-config.mjs",
 		"preview": "node scripts/preview.mjs",
 		"check": "node scripts/check.mjs",
 		"prune-assets": "node scripts/prune-assets.mjs",
