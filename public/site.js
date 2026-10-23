@@ -2,6 +2,10 @@ const toggle = document.querySelector(".mobile-toggle");
 toggle?.addEventListener("click", () => {
 	const open = document.querySelector("nav")?.classList.toggle("nav-open");
 	toggle.setAttribute("aria-expanded", String(Boolean(open)));
+	toggle.setAttribute(
+		"aria-label",
+		open ? "Close navigation menu" : "Open navigation menu",
+	);
 });
 const search = document.querySelector(".search-widget-handle .search");
 search?.addEventListener("click", () => {

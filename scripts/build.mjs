@@ -46,6 +46,9 @@ for (const file of (await fs.readdir("content"))
 	$(".custom-logo-link").prepend(
 		'<img class="brand-icon" src="/assets/87e7d51a8cca7d85-192.webp" width="40" height="40" alt="">',
 	);
+	$(".mobile-toggle").html(
+		'<svg class="menu-icon" viewBox="0 0 32 32" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path class="menu-line menu-line-top" d="M6 9h20"/><path class="menu-line menu-line-middle" d="M6 16h20"/><path class="menu-line menu-line-bottom" d="M6 23h20"/></svg>',
+	);
 	$("#colophon").html(
 		'<div class="container archive-footer"><nav aria-label="Footer"><a href="/imprint/">Imprint</a><span aria-hidden="true">·</span><a href="/privacy-policy/">Privacy Policy</a></nav><a class="archive-back-top" href="#page" aria-label="Back to top">Back to top</a></div>',
 	);
@@ -68,6 +71,7 @@ for (const file of (await fs.readdir("content"))
 		link.append($('<h4 class="related-article-title"></h4>').text(title));
 		item.removeAttr("class").addClass("related-article").empty().append(link);
 	});
+	$(".related-grid > .related-article").slice(3).remove();
 	$(".post-grid-small,.post-grid-wide")
 		.filter((_, element) => !$(element).closest("body.single-post").length)
 		.each((_, element) => {
